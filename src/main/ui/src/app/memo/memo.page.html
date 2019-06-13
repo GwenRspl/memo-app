@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Memo App
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+        <p *ngIf="this.mode == '/n'">New !</p>
+        <p *ngIf="this.mode == '/m'">Memo !</p>
+    </ion-card>
+</ion-content>
