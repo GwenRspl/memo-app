@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Memo} from '../home/memo.model';
 import {MemoService} from '../home/services/memo.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-memo',
@@ -9,17 +10,23 @@ import {MemoService} from '../home/services/memo.service';
   styleUrls: ['./memo.page.scss'],
 })
 export class MemoPage implements OnInit {
+  newMemoForm: FormGroup;
   private _showMemoMode: boolean;
   private _memo: Memo;
   private _editMode: boolean;
 
   constructor(private route: ActivatedRoute,
-              private memoService: MemoService) {
+              private memoService: MemoService,
+              private formBuilder: FormBuilder) {
   }
 
 
   get showMemoMode(): boolean {
     return this._showMemoMode;
+  }
+
+  get f() {
+    return this.newMemoForm.controls;
   }
 
   get editMode(): boolean {
@@ -44,6 +51,7 @@ export class MemoPage implements OnInit {
       this.retrieveMemo(+this.route.snapshot.params.id);
     } else {
       this._editMode = true;
+      this.initNewForm();
     }
   }
 
@@ -51,11 +59,17 @@ export class MemoPage implements OnInit {
     this.memoService.getMemoById(id).subscribe(
       data => {
         this._memo = data;
-        console.log(data);
+        this.initNewForm();
       },
       error => console.log(error)
-    )
-    ;
+    );
+  }
+
+  initNewForm() {
+    this.newMemoForm = this.formBuilder.group({
+      title: [this.memo ? this.memo.title : ''],
+      content: [this.memo ? this.memo.content : '']
+    });
   }
 
   toggleEditMode() {
@@ -75,5 +89,17 @@ export class MemoPage implements OnInit {
   }
 
   saveMemo() {
+    console.log(this.newMemoForm.getRawValue());
+    if (this.newMemoForm.value.title == '' && this.newMemoForm.value.content == '') {
+      return;
+    }
+    let newMemo: Memo = new Memo();
+    newMemo.title = this.newMemoForm.value.title;
+    newMemo.content = this.newMemoForm.value.content;
+    newMemo.lastEdited = new Date();
+    this.memoService.saveMemo(newMemo).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
   }
 }

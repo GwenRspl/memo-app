@@ -65,4 +65,10 @@ export class MemoService {
     }
     return of(memoToFind);
   }
+
+  saveMemo(memo: Memo): Observable<string> {
+    memo.id = this.memoList.length + 1;
+    this._memoList.push(memo);
+    return of('ok');
+  }
 }

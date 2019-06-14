@@ -23,15 +23,19 @@
         <p class="ion-float-end">Last edited: {{memo.lastEdited | date}}</p>
     </div>
 
-    <div *ngIf="this.memo && this.editMode">
-        <h1>{{memo.title}}</h1>
-        <p text-justify>{{memo.content}}</p>
-        <p class="ion-float-end">Last edited: {{memo.lastEdited | date}}</p>
-    </div>
-
-    <div *ngIf="!this.memo && this.editMode">
-        <h1>Type a title</h1>
-        <p text-justify>Type something</p>
+    <div *ngIf="this.editMode">
+        <form [formGroup]="newMemoForm">
+            <ion-list>
+                <ion-item>
+                    <ion-input formControlName="title" placeholder="Type title" type="text">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-textarea formControlName="content" placeholder="Type memo" rows="25" type="text">
+                    </ion-textarea>
+                </ion-item>
+            </ion-list>
+        </form>
         <p class="ion-float-end">Last edited: Now</p>
     </div>
 
