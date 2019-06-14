@@ -54,21 +54,19 @@ export class MemoService {
   }
 
   getMemoById(id: number): Observable<Memo> {
-    let memoToFind: Memo;
-    this.memoList.forEach(memo => {
-      if (memo.id === id) {
-        memoToFind = memo;
-      }
-    });
-    if (memoToFind == null) {
-      return of(null);
-    }
-    return of(memoToFind);
+    let index = this.memoList.findIndex(m => m.id === id);
+    return of(this._memoList[index]);
   }
 
   saveMemo(memo: Memo): Observable<string> {
     memo.id = this.memoList.length + 1;
     this._memoList.push(memo);
+    return of('ok');
+  }
+
+  updateMemo(memo: Memo): Observable<string> {
+    let index = this.memoList.findIndex(m => m.id === memo.id);
+    this._memoList[index] = memo;
     return of('ok');
   }
 }

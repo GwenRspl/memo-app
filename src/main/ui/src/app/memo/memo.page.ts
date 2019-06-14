@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Memo} from '../home/memo.model';
 import {MemoService} from '../home/services/memo.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -17,7 +17,8 @@ export class MemoPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private memoService: MemoService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private router: Router) {
   }
 
 
@@ -85,11 +86,20 @@ export class MemoPage implements OnInit {
   }
 
   updateMemo() {
-    this.toggleEditMode();
+    if (!this.newMemoForm.pristine) {
+      this._memo.title = this.newMemoForm.value.title;
+      this._memo.content = this.newMemoForm.value.content;
+      this._memo.lastEdited = new Date();
+      this.memoService.updateMemo(this.memo).subscribe(
+        () => this.toggleEditMode(),
+        error => console.log(error)
+      );
+    } else {
+      this.toggleEditMode();
+    }
   }
 
   saveMemo() {
-    console.log(this.newMemoForm.getRawValue());
     if (this.newMemoForm.value.title == '' && this.newMemoForm.value.content == '') {
       return;
     }
@@ -98,7 +108,7 @@ export class MemoPage implements OnInit {
     newMemo.content = this.newMemoForm.value.content;
     newMemo.lastEdited = new Date();
     this.memoService.saveMemo(newMemo).subscribe(
-      data => console.log(data),
+      () => this.router.navigateByUrl('/home'),
       error => console.log(error)
     );
   }
