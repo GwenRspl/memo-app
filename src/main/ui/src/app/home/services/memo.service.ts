@@ -69,4 +69,12 @@ export class MemoService {
     this._memoList[index] = memo;
     return of('ok');
   }
+
+  deleteMemo(id: number): Observable<string> {
+    let index = this.memoList.findIndex(m => m.id === id);
+    if (index > -1) {
+      this._memoList.splice(index, 1);
+    }
+    return of('ok');
+  }
 }

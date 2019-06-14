@@ -6,9 +6,12 @@
         <ion-title>
             Memo App
         </ion-title>
-        <ion-buttons (click)="saveButton()" *ngIf="this.editMode" slot="end">
-            <ion-button>
+        <ion-buttons slot="end">
+            <ion-button (click)="saveButton()" *ngIf="this.editMode">
                 <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button (click)="deleteMemo()" *ngIf="this.memo">
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-buttons>
 

@@ -112,4 +112,11 @@ export class MemoPage implements OnInit {
       error => console.log(error)
     );
   }
+
+  deleteMemo() {
+    this.memoService.deleteMemo(this.memo.id).subscribe(
+      () => this.router.navigateByUrl('/home'),
+      error => console.log(error)
+    );
+  }
 }
