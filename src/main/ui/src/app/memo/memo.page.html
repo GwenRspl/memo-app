@@ -6,13 +6,33 @@
         <ion-title>
             Memo App
         </ion-title>
+        <ion-buttons (click)="saveButton()" *ngIf="this.editMode" slot="end">
+            <ion-button>
+                <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
     </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-    <ion-card>
-        <p *ngIf="this.mode == '/n'">New !</p>
-        <p *ngIf="this.mode == '/m'">Memo !</p>
-    </ion-card>
+    <div (click)="toggleEditMode()" *ngIf="this.memo && !this.editMode">
+        <h1>{{memo.title}}</h1>
+        <p text-justify>{{memo.content}}</p>
+        <p class="ion-float-end">Last edited: {{memo.lastEdited | date}}</p>
+    </div>
+
+    <div *ngIf="this.memo && this.editMode">
+        <h1>{{memo.title}}</h1>
+        <p text-justify>{{memo.content}}</p>
+        <p class="ion-float-end">Last edited: {{memo.lastEdited | date}}</p>
+    </div>
+
+    <div *ngIf="!this.memo && this.editMode">
+        <h1>Type a title</h1>
+        <p text-justify>Type something</p>
+        <p class="ion-float-end">Last edited: Now</p>
+    </div>
+
 </ion-content>

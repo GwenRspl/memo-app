@@ -52,4 +52,17 @@ export class MemoService {
   getMemos(): Observable<Memo[]> {
     return of(this.memoList);
   }
+
+  getMemoById(id: number): Observable<Memo> {
+    let memoToFind: Memo;
+    this.memoList.forEach(memo => {
+      if (memo.id === id) {
+        memoToFind = memo;
+      }
+    });
+    if (memoToFind == null) {
+      return of(null);
+    }
+    return of(memoToFind);
+  }
 }
