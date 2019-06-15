@@ -39,8 +39,9 @@
                 </ion-item>
             </ion-list>
         </form>
-        <p class="ion-float-end date">Last
+        <p *ngIf="memo" class="ion-float-end date">Last
             edited: {{this.newMemoForm.pristine === true ? (memo.lastEdited | date:'short') : 'now'}}</p>
+        <p *ngIf="!memo" class="ion-float-end date">Last edited: now</p>
     </div>
 
 </ion-content>
