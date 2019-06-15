@@ -20,7 +20,7 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    //this.retrieveMemos();
+    this.retrieveMemos();
   }
 
   retrieveMemos() {
@@ -31,9 +31,7 @@ export class HomePage {
     this.router.navigate(['/', 'new']);
   }
 
-  showMemo(id: number) {
-
+  showMemo(id: string) {
     this.router.navigateByUrl('/memo/' + id);
-
   }
 }

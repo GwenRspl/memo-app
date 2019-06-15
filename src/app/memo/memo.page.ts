@@ -46,18 +46,17 @@ export class MemoPage implements OnInit {
   }
 
   checkMode() {
-    console.log(this.route.snapshot);
-    // if (this.route.snapshot.['_routerState'].url.slice(0, 2) === '/m') {
-    //   this._showMemoMode = true;
-    //   this._editMode = false;
-    //   this.retrieveMemo(+this.route.snapshot.params.id);
-    // } else {
-    //   this._editMode = true;
-    //   this.initNewForm();
-    // }
+    if (this.route.snapshot['_routerState'].url.slice(0, 2) === '/m') {
+      this._showMemoMode = true;
+      this._editMode = false;
+      this.retrieveMemo(this.route.snapshot.params.id);
+    } else {
+      this._editMode = true;
+      this.initNewForm();
+    }
   }
 
-  retrieveMemo(id: number) {
+  retrieveMemo(id: string) {
     this.storageService.getMemoById(id).then(
       data => {
         this._memo = data;
