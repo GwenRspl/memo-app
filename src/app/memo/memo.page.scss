@@ -1,0 +1,33 @@
+ion-content {
+  --background: white;
+}
+
+div {
+  padding-left: 1em;
+  padding-right: 1em;
+  color: #737373;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+ion-card {
+  padding-left: 1em;
+  padding-right: 1em;
+  height: 100%;
+  --background: white;
+}
+
+
+p {
+  white-space: pre-line;
+}
+
+ion-input, ion-textarea {
+  --color: #737373;
+}
+
+.date {
+  font-size: smaller;
+}

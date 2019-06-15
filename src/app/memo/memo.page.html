@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Memo App
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="saveButton()" *ngIf="this.editMode">
+                <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button (click)="deleteMemo()" *ngIf="this.memo">
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <div (click)="toggleEditMode()" *ngIf="this.memo && !this.editMode">
+        <h1>{{memo.title}}</h1>
+        <p text-justify>{{memo.content}}</p>
+        <p class="ion-float-end date">Last edited: {{memo.lastEdited | date:'short'}}</p>
+    </div>
+
+    <div *ngIf="this.editMode">
+        <form [formGroup]="newMemoForm">
+            <ion-list>
+                <ion-item>
+                    <ion-input formControlName="title" placeholder="Type title" type="text">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-textarea formControlName="content" placeholder="Type memo" rows="25" type="text">
+                    </ion-textarea>
+                </ion-item>
+            </ion-list>
+        </form>
+        <p class="ion-float-end date">Last
+            edited: {{this.newMemoForm.pristine === true ? (memo.lastEdited | date:'short') : 'now'}}</p>
+    </div>
+
+</ion-content>

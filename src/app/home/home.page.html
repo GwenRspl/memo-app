@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            Memo App
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card (click)="showMemo(memo.id)" *ngFor="let memo of memos">
+        <h1>{{(memo.title.length > 20) ? (memo.title | slice:0:20) + '...' : (memo.title)}}</h1>
+        <p text-justify>{{(memo.content.length > 110) ? (memo.content | slice:0:110) + '...' : (memo.content)}}</p>
+    </ion-card>
+    <ion-fab horizontal="end" slot="fixed" vertical="bottom">
+        <ion-fab-button (click)="newMemo()" color="primary">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
