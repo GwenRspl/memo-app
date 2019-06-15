@@ -25,8 +25,10 @@ export class HomePage {
 
   retrieveMemos() {
     this.storageService.getMemos().then(memos => {
-      this._memos = memos;
-      this.sortByDate();
+      if (memos != null) {
+        this._memos = memos;
+        this.sortByDate();
+      }
     });
   }
 
