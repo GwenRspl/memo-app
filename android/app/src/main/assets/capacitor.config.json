@@ -1,0 +1,7 @@
+{
+  "appId": "com.gwenrspl.memoapp",
+  "appName": "memo-app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
