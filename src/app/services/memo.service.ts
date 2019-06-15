@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Memo} from '../memo.model';
+import {Memo} from '../home/memo.model';
 import {Observable, of} from 'rxjs';
+import {StorageService} from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class MemoService {
 
   private _memoList: Memo[] = [];
 
-  constructor() {
+  constructor(private storageService: StorageService) {
     this._memoList = [
       {
         id: 1,
@@ -41,7 +42,7 @@ export class MemoService {
           'Quiet, quiet. I\'m gonna read your thoughts. Let\'s see now, you\'ve come from a great distance?\n',
         lastEdited: new Date()
       }
-    ]
+    ];
   }
 
 
@@ -54,7 +55,7 @@ export class MemoService {
   }
 
   getMemoById(id: number): Observable<Memo> {
-    let index = this.memoList.findIndex(m => m.id === id);
+    const index = this.memoList.findIndex(m => m.id === id);
     return of(this._memoList[index]);
   }
 
@@ -65,13 +66,13 @@ export class MemoService {
   }
 
   updateMemo(memo: Memo): Observable<string> {
-    let index = this.memoList.findIndex(m => m.id === memo.id);
+    const index = this.memoList.findIndex(m => m.id === memo.id);
     this._memoList[index] = memo;
     return of('ok');
   }
 
   deleteMemo(id: number): Observable<string> {
-    let index = this.memoList.findIndex(m => m.id === id);
+    const index = this.memoList.findIndex(m => m.id === id);
     if (index > -1) {
       this._memoList.splice(index, 1);
     }

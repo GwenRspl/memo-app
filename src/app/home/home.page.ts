@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Memo} from './memo.model';
-import {MemoService} from './services/memo.service';
+import {MemoService} from '../services/memo.service';
 import {Router} from '@angular/router';
 
 @Component({

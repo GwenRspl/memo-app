@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Memo} from '../home/memo.model';
-import {MemoService} from '../home/services/memo.service';
+import {MemoService} from '../services/memo.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
