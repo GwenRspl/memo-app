@@ -24,7 +24,10 @@ export class HomePage {
   }
 
   retrieveMemos() {
-    this.storageService.getMemos().then(memos => this._memos = memos);
+    this.storageService.getMemos().then(memos => {
+      this._memos = memos;
+      this.sortByDate();
+    });
   }
 
   newMemo() {
@@ -33,5 +36,17 @@ export class HomePage {
 
   showMemo(id: string) {
     this.router.navigateByUrl('/memo/' + id);
+  }
+
+  sortByDate() {
+    this.memos.sort((a: Memo, b: Memo) => {
+      if (a.lastEdited < b.lastEdited) {
+        return 1;
+      } else if (a.lastEdited > b.lastEdited) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
   }
 }
