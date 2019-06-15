@@ -23,7 +23,7 @@
     <div (click)="toggleEditMode()" *ngIf="this.memo && !this.editMode">
         <h1>{{memo.title}}</h1>
         <p text-justify>{{memo.content}}</p>
-        <p class="ion-float-end">Last edited: {{memo.lastEdited | date}}</p>
+        <p class="ion-float-end date">Last edited: {{memo.lastEdited | date:'short'}}</p>
     </div>
 
     <div *ngIf="this.editMode">
@@ -39,7 +39,8 @@
                 </ion-item>
             </ion-list>
         </form>
-        <p class="ion-float-end">Last edited: Now</p>
+        <p class="ion-float-end date">Last
+            edited: {{this.newMemoForm.pristine === true ? (memo.lastEdited | date:'short') : 'now'}}</p>
     </div>
 
 </ion-content>

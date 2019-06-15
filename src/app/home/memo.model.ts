@@ -1,5 +1,5 @@
 export class Memo {
-  id: number;
+  id: string;
   title: string;
   content: string;
   lastEdited: Date;

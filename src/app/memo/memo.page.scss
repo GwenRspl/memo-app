@@ -23,3 +23,11 @@ ion-card {
 p {
   white-space: pre-line;
 }
+
+ion-input, ion-textarea {
+  --color: #737373;
+}
+
+.date {
+  font-size: smaller;
+}

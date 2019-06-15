@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Memo} from '../home/memo.model';
-import {MemoService} from '../home/services/memo.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {StorageService} from '../services/storage.service';
 
 @Component({
   selector: 'app-memo',
@@ -16,7 +16,7 @@ export class MemoPage implements OnInit {
   private _editMode: boolean;
 
   constructor(private route: ActivatedRoute,
-              private memoService: MemoService,
+              private storageService: StorageService,
               private formBuilder: FormBuilder,
               private router: Router) {
   }
@@ -49,15 +49,15 @@ export class MemoPage implements OnInit {
     if (this.route.snapshot['_routerState'].url.slice(0, 2) === '/m') {
       this._showMemoMode = true;
       this._editMode = false;
-      this.retrieveMemo(+this.route.snapshot.params.id);
+      this.retrieveMemo(this.route.snapshot.params.id);
     } else {
       this._editMode = true;
       this.initNewForm();
     }
   }
 
-  retrieveMemo(id: number) {
-    this.memoService.getMemoById(id).subscribe(
+  retrieveMemo(id: string) {
+    this.storageService.getMemoById(id).then(
       data => {
         this._memo = data;
         this.initNewForm();
@@ -90,7 +90,7 @@ export class MemoPage implements OnInit {
       this._memo.title = this.newMemoForm.value.title;
       this._memo.content = this.newMemoForm.value.content;
       this._memo.lastEdited = new Date();
-      this.memoService.updateMemo(this.memo).subscribe(
+      this.storageService.updateMemo(this.memo).then(
         () => this.toggleEditMode(),
         error => console.log(error)
       );
@@ -100,21 +100,21 @@ export class MemoPage implements OnInit {
   }
 
   saveMemo() {
-    if (this.newMemoForm.value.title == '' && this.newMemoForm.value.content == '') {
+    if (this.newMemoForm.value.title === '' && this.newMemoForm.value.content === '') {
       return;
     }
-    let newMemo: Memo = new Memo();
+    const newMemo: Memo = new Memo();
     newMemo.title = this.newMemoForm.value.title;
     newMemo.content = this.newMemoForm.value.content;
     newMemo.lastEdited = new Date();
-    this.memoService.saveMemo(newMemo).subscribe(
+    this.storageService.saveMemo(newMemo).then(
       () => this.router.navigateByUrl('/home'),
       error => console.log(error)
     );
   }
 
   deleteMemo() {
-    this.memoService.deleteMemo(this.memo.id).subscribe(
+    this.storageService.deleteMemo(this.memo.id).then(
       () => this.router.navigateByUrl('/home'),
       error => console.log(error)
     );

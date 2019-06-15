@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Memo} from './memo.model';
-import {MemoService} from './services/memo.service';
 import {Router} from '@angular/router';
+import {StorageService} from '../services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 export class HomePage {
   private _memos: Memo[] = [];
 
-  constructor(private memoService: MemoService,
+  constructor(private storageService: StorageService,
               private router: Router) {
   }
 
@@ -20,19 +20,33 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    this.memoService.getMemos().subscribe(
-      data => this._memos = data,
-      error => console.log(error)
-    );
+    this.retrieveMemos();
+  }
+
+  retrieveMemos() {
+    this.storageService.getMemos().then(memos => {
+      this._memos = memos;
+      this.sortByDate();
+    });
   }
 
   newMemo() {
     this.router.navigate(['/', 'new']);
   }
 
-  showMemo(id: number) {
-
+  showMemo(id: string) {
     this.router.navigateByUrl('/memo/' + id);
+  }
 
+  sortByDate() {
+    this.memos.sort((a: Memo, b: Memo) => {
+      if (a.lastEdited < b.lastEdited) {
+        return 1;
+      } else if (a.lastEdited > b.lastEdited) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
   }
 }
